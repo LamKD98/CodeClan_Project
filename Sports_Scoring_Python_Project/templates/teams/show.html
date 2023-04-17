@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Standings</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Team Name</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for team, points in leaderboard %}
+        <tr>
+          <td>{{ team.team_name }}</td>
+          <td>{{ team.wins }}</td>
+          <td>{{ team.losses }}</td>
+          <td>{{ points }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

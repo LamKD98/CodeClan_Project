@@ -3,6 +3,7 @@ from db.run_sql import run_sql
 from models.team import Team
 from models.league import League
 import repositories.league_repository as league_repository
+from repositories.team_repository import team_repository
 
 
 def save(team):
@@ -51,4 +52,24 @@ def update(team):
     sql = "UPDATE teams SET team_name = %s, league_id = %s, wins = %s, losses = %s, region = %s WHERE id = %s"
     values = [team.team_name, team.league.id, team.wins, team.losses, team.region, team.id]
     run_sql(sql, values)
+
+def calculate_leaderboard():
+    teams = team_repository.select_all()
+    leaderboard = []
+
+    for team in teams:
+        wins = team.wins
+        losses = team.losses
+        points = 0
+        for other_team in teams:
+            if team == other_team:
+                continue
+            if wins > other_team.wins or (wins == other_team.wins and losses < other_team.losses):
+                points += 3
+            elif wins == other_team.wins and losses == other_team.losses:
+                points += 1
+        leaderboard.append((team, points))
+
+    leaderboard.sort(key=lambda x: x[1], reverse=True)
+    return leaderboard
 
