@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Edit Team</h1>
+  <form method="POST" action="{{ url_for('team.edit_team', team_id=team.id) }}">
+    <label for="name">Name:</label>
+    <input type="text" name="name" value="{{ team.name }}"><br>
+    <label for="city">City:</label>
+    <input type="text" name="city" value="{{ team.city }}"><br>
+    <label for="country">Country:</label>
+    <input type="text" name="country" value="{{ team.country }}"><br>
+    <label for="logo">Logo URL:</label>
+    <input type="text" name="logo" value="{{ team.logo }}"><br>
+    <input type="submit" value="Update">
+  </form>
+{% endblock %}
