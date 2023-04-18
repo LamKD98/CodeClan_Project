@@ -6,27 +6,20 @@
     <thead>
       <tr>
         <th>Team Name</th>
-        <th>League</th>
+        <th>Logo</th>
         <th>Wins</th>
         <th>Losses</th>
         <th>Region</th>
-        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       {% for team in teams %}
         <tr>
-          <td>{{ team.team_name }}</td>
-          <td>{{ team.league.league_name }}</td>
+          <td>{{ team.name }}</td>
+          <td><img src="{{ url_for('static', filename='logos/' + team.logo_filename) }}" alt="{{ team.name }} logo"></td>
           <td>{{ team.wins }}</td>
           <td>{{ team.losses }}</td>
           <td>{{ team.region }}</td>
-          <td>
-            <a href="/teams/{{ team.id }}/edit">Edit</a>
-            <form action="/teams/{{ team.id }}/delete" method="POST">
-              <input type="submit" value="Delete">
-            </form>
-          </td>
         </tr>
       {% endfor %}
     </tbody>

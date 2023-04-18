@@ -3,9 +3,7 @@ DROP TABLE IF EXISTS league;
 
 CREATE TABLE league(
     id SERIAL PRIMARY KEY,
-    league_name VARCHAR(255),
-    position INT
-
+    league_name VARCHAR(255)
 );
 
 
@@ -16,7 +14,6 @@ CREATE TABLE teams (
     losses INT,
     region VARCHAR(255),
     league_id INT NOT NULL REFERENCES league(id)
-
 );
 
 

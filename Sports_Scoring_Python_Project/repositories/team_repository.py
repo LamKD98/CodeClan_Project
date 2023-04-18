@@ -3,7 +3,6 @@ from db.run_sql import run_sql
 from models.team import Team
 from models.league import League
 import repositories.league_repository as league_repository
-from repositories.team_repository import team_repository
 
 
 def save(team):
@@ -18,9 +17,10 @@ def select(id):
     team = None
     sql = "SELECT * FROM teams WHERE id=%s"
     values = [id]
-    result = run_sql(sql,values)[0]
+    results = run_sql(sql,values)
 
-    if result is not None:
+    if results is not None:
+        result = results[0]
         league = league_repository.select(result['league_id'])
         team = Team(result['team_name'],league, result['wins'], result['losses'],result['region'], result['id'] )
     return team
@@ -40,11 +40,11 @@ def select_all():
     return teams
 
 def delete_all():
-    sql = "DELETE FROM books"
+    sql = "DELETE FROM teams"
     run_sql(sql)
 
 def delete(id):
-    sql = "DELETE FROM books WHERE id=%s"
+    sql = "DELETE FROM teams WHERE id=%s"
     values = [id]
     run_sql(sql, values)
 
@@ -53,23 +53,5 @@ def update(team):
     values = [team.team_name, team.league.id, team.wins, team.losses, team.region, team.id]
     run_sql(sql, values)
 
-def calculate_leaderboard():
-    teams = team_repository.select_all()
-    leaderboard = []
 
-    for team in teams:
-        wins = team.wins
-        losses = team.losses
-        points = 0
-        for other_team in teams:
-            if team == other_team:
-                continue
-            if wins > other_team.wins or (wins == other_team.wins and losses < other_team.losses):
-                points += 3
-            elif wins == other_team.wins and losses == other_team.losses:
-                points += 1
-        leaderboard.append((team, points))
-
-    leaderboard.sort(key=lambda x: x[1], reverse=True)
-    return leaderboard
 
