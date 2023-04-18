@@ -13,10 +13,10 @@
       </tr>
     </thead>
     <tbody>
-      {% for team in teams %}
+      {% for team in all_teams %}
         <tr>
-          <td>{{ team.name }}</td>
-          <td><img src="{{ url_for('static', filename='logos/' + team.logo_filename) }}" alt="{{ team.name }} logo"></td>
+          <td>{{ team.team_name }}</td>
+          <td><img src="{{ team.logo }}" alt="{{ team.team_name }}" width="50"></td>
           <td>{{ team.wins }}</td>
           <td>{{ team.losses }}</td>
           <td>{{ team.region }}</td>
@@ -25,6 +25,7 @@
     </tbody>
   </table>
 {% endblock %}
+
 
 
 

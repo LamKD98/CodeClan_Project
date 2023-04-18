@@ -4,14 +4,15 @@ from models.team import Team
 from models.league import League
 import repositories.league_repository as league_repository
 
-
 def save(team):
-    sql = "INSERT INTO teams (team_name, league_id, wins,losses,region) VALUES (%s, %s,%s,%s,%s) RETURNING *"
-    values = [team.team_name, team.league.id, team.wins, team.losses, team.region]
+    sql = "INSERT INTO teams (team_name, league_id, wins, losses, region, logo) VALUES (%s, %s, %s, %s, %s, %s) RETURNING *"
+    values = [team.team_name, team.league.id, team.wins, team.losses, team.region, team.logo]
     results = run_sql(sql, values)
-    id = results[0]['id']
-    team.id = id
-    return team
+    if results:
+        team.id = results[0]['id']
+        return team
+    else:
+        return None
 
 def select(id):
     team = None
@@ -52,6 +53,7 @@ def update(team):
     sql = "UPDATE teams SET team_name = %s, league_id = %s, wins = %s, losses = %s, region = %s WHERE id = %s"
     values = [team.team_name, team.league.id, team.wins, team.losses, team.region, team.id]
     run_sql(sql, values)
+
 
 
 

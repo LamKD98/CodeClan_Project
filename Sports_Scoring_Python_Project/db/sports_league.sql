@@ -13,6 +13,7 @@ CREATE TABLE teams (
     wins INT,
     losses INT,
     region VARCHAR(255),
+    logo VARCHAR(255),
     league_id INT NOT NULL REFERENCES league(id)
 );
 
