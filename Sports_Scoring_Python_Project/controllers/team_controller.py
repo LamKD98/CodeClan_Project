@@ -45,7 +45,7 @@ def show():
 
 # EDIT
 # GET /teams/<id>/edit
-@team_blueprint.route('/teams/<id>/edit', methods=['GET', 'POST'])
+@team_blueprint.route('/teams/<id>/edit', methods=['GET'])
 def edit_team(id):
     team = team_repository.select(id)
     league = league_repository.select_all()
@@ -54,15 +54,14 @@ def edit_team(id):
 
 # UPDATE
 # POST /teams/<id>
-@team_blueprint.route('/teams/edit', methods=['POST'])
-def update():
-    team_id = request.form['team_id']
-    team_name = request.form['team_name']
+@team_blueprint.route('/teams/<id>', methods=['POST'])
+def update(id):
     league_id = request.form['league_id']
+    team_name = request.form['team_name']
     region = request.form['region']
 
     league = league_repository.select(league_id)
-    team = team_repository.select(team_id)
+    team = team_repository.select(id)
     team.team_name = team_name
     team.league = league
     team.region = region
@@ -71,8 +70,7 @@ def update():
 
 # DELETE
 # DELETE /tasks/<id>/delete
-@team_blueprint.route('/teams/delete', methods=['POST'])
-def delete():
-    team_id = request.form['team_id']
-    team_repository.delete(team_id)
-    return redirect(url_for('teams.index'))
+@team_blueprint.route('/teams/<id>/delete', methods=['POST'])
+def delete(id):
+    team_repository.delete(id)
+    return redirect('/teams') 

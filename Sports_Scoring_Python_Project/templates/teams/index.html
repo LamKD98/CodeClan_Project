@@ -16,10 +16,15 @@
       {% for team in all_teams %}
         <tr>
           <td>{{ team.team_name }}</td>
-          <td><img src="{{ team.logo }}" alt="{{ team.team_name }}" width="50"></td>
+          <td id="logo"><img id="logo" src="static/images/{{ team.logo }}" alt="{{ team.team_name }}"></td>
           <td>{{ team.wins }}</td>
           <td>{{ team.losses }}</td>
           <td>{{ team.region }}</td>
+          <td>
+            <form action="/teams/{{team.id}}/delete" method="POST">
+            <button>Delete</button>
+            </form>
+        </td>
         </tr>
       {% endfor %}
     </tbody>

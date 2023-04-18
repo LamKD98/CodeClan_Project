@@ -1,7 +1,7 @@
 import pdb
 from models.team import Team
 from models.league import League
-
+from models.game import Game
 import repositories.team_repository as team_repository
 import repositories.league_repository as league_repository
 
@@ -19,7 +19,7 @@ team_repository.save(team_1)
 team_2 = Team('Team Liquid', league_1,2,4,'North America', 'Team_Liquid_logo.png')
 team_repository.save(team_2)
 
-team_3 = Team('Fnatic', league_1, 6,0,'Europe', 'Fnatic_logo.png')
+team_3 = Team('Fnatic', league_1, 6,0,'Europe', 'fnatic_logo.png')
 team_repository.save(team_3)
 
 team_4 = Team('DRX', league_1,0,6,'South Korea', 'DRX_logo.png')

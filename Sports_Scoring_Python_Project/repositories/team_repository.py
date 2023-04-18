@@ -13,6 +13,7 @@ def save(team):
         return team
     else:
         return None
+    
 
 def select(id):
     team = None
@@ -23,7 +24,7 @@ def select(id):
     if results is not None:
         result = results[0]
         league = league_repository.select(result['league_id'])
-        team = Team(result['team_name'],league, result['wins'], result['losses'],result['region'], result['id'] )
+        team = Team(result['team_name'],league, result['wins'], result['losses'],result['region'], result['logo'], result['id'] )
     return team
 
 
@@ -35,7 +36,7 @@ def select_all():
 
     for row in results:
         league = league_repository.select(row['league_id'])
-        team = Team(row['team_name'],league, row['wins'], row['losses'],row['region'], row['id'] )
+        team = Team(row['team_name'],league, row['wins'], row['losses'],row['region'], row['logo'], row['id'] )
         teams.append(team)
 
     return teams
@@ -50,8 +51,8 @@ def delete(id):
     run_sql(sql, values)
 
 def update(team):
-    sql = "UPDATE teams SET team_name = %s, league_id = %s, wins = %s, losses = %s, region = %s WHERE id = %s"
-    values = [team.team_name, team.league.id, team.wins, team.losses, team.region, team.id]
+    sql = "UPDATE teams SET team_name = %s, league_id = %s, wins = %s, losses = %s, region = %s, logo = %s WHERE id = %s"
+    values = [team.team_name, team.league.id, team.wins, team.losses, team.region, team.logo, team.id]
     run_sql(sql, values)
 
 
