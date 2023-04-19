@@ -3,6 +3,7 @@ from db.run_sql import run_sql
 from models.team import Team
 from models.league import League
 import repositories.league_repository as league_repository
+import repositories.game_repository as game_repository
 
 def save(team):
     sql = "INSERT INTO teams (team_name, league_id, wins, losses, region, logo) VALUES (%s, %s, %s, %s, %s, %s) RETURNING *"
@@ -16,6 +17,7 @@ def save(team):
     
 
 def select(id):
+    print(id)
     team = None
     sql = "SELECT * FROM teams WHERE id=%s"
     values = [id]
@@ -55,6 +57,17 @@ def update(team):
     values = [team.team_name, team.league.id, team.wins, team.losses, team.region, team.logo, team.id]
     run_sql(sql, values)
 
+# def select_all_teams():
+#     teams = []
+
+#     sql = "SELECT * FROM teams"
+#     results = run_sql(sql)
+
+#     for row in results:
+#         team = Team(row['team_name'], row['league_id'], row['wins'], row['losses'], row['region'], row['id'])
+#         teams.append(team)
+
+#     return teams
 
 
 

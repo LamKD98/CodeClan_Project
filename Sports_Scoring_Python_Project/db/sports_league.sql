@@ -21,12 +21,12 @@ CREATE TABLE teams (
 
 CREATE TABLE games (
     id SERIAL PRIMARY KEY,
-    home_team_id INTEGER,
-    away_team_id INTEGER,
+    home_team INT NOT NULL REFERENCES teams(id) ON DELETE CASCADE,
+    away_team INT NOT NULL REFERENCES teams(id) ON DELETE CASCADE,
     home_team_score INTEGER,
     away_team_score INTEGER,
-    FOREIGN KEY (home_team_id) REFERENCES teams(id),
-    FOREIGN KEY (away_team_id) REFERENCES teams(id)
+    game_date DATE NOT NULL DEFAULT CURRENT_DATE
+
 );
 
 

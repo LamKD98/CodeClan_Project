@@ -20,19 +20,19 @@ def new():
     leagues = league_repository.select_all()
     return render_template('teams/new.html', leagues=leagues)
 
-#CREATE
-@team_blueprint.route('/teams', methods=['POST'])
+@team_blueprint.route("/teams", methods=["POST"])
 def create():
-    team_name = request.form['team_name']
-    league_id = request.form['league']
-    region = request.form['region']
-    wins = request.form['wins']
-    losses = request.form['losses']
-
+    team_name = request.form["team_name"]
+    league_id = request.form["league"]
     league = league_repository.select(league_id)
-    team = Team(team_name, league, wins=int(wins), losses=int(losses), region=region)
-    team_repository.save(team)
-    return redirect(url_for('teams.new'))
+    wins = request.form["wins"]
+    losses = request.form["losses"]
+    region = request.form["region"]
+    logo = request.form["logo"]
+
+    new_team = Team(team_name, league, wins, losses, region, logo)
+    team_repository.save(new_team)
+    return redirect("/teams")
 
 
 # SHOW
@@ -48,25 +48,23 @@ def show():
 @team_blueprint.route('/teams/<id>/edit', methods=['GET'])
 def edit_team(id):
     team = team_repository.select(id)
-    league = league_repository.select_all()
-    return render_template('teams/edit.html',team=team,league=league)
+    leagues = league_repository.select_all()
+    return render_template('teams/edit.html',team=team,leagues=leagues)
 
 
 # UPDATE
 # POST /teams/<id>
-@team_blueprint.route('/teams/<id>', methods=['POST'])
+@team_blueprint.route("/teams/<id>", methods=["POST"])
 def update(id):
-    league_id = request.form['league_id']
-    team_name = request.form['team_name']
-    region = request.form['region']
-
+    team_name = request.form["name"]
+    league_id = request.form["league_name"]
     league = league_repository.select(league_id)
-    team = team_repository.select(id)
-    team.team_name = team_name
-    team.league = league
-    team.region = region
-    team_repository.update(team)
-    return redirect(url_for('teams.index'))   
+    wins = request.form["wins"]
+    losses = request.form["losses"]
+    region = request.form["region"]
+    logo = request.form["logo"]
+    team_repository.update(Team(team_name, league, wins, losses, region, logo, id))
+    return redirect("/teams")
 
 # DELETE
 # DELETE /tasks/<id>/delete

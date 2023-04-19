@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Edit Game</h1>
+  <form action=" /games/{{game.id}} " method="POST">
+    <label for="home_team">Home Team:</label>
+    <select name="home_team" id="home_team">
+      {% for team in teams %}
+        <option value="{{ team.id }}" {% if game.home_team.id == team.id %}selected{% endif %}>{{ team.team_name }}</option>
+      {% endfor %}
+    </select><br><br>
+    <label for="away_team">Away Team:</label>
+    <select name="away_team" id="away_team">
+      {% for team in teams %}
+        <option value="{{ team.id }}" {% if game.away_team.id == team.id %}selected{% endif %}>{{ team.team_name }}</option>
+      {% endfor %}
+    </select><br><br>
+    <label for="home_team_score">Home Team Score:</label>
+    <input type="number" name="home_team_score" id="home_team_score" value="{{ game.home_team_score }}"><br><br>
+    <label for="away_team_score">Away Team Score:</label>
+    <input type="number" name="away_team_score" id="away_team_score" value="{{ game.away_team_score }}"><br><br>
+    <label for="game_date">Date:</label>
+    <input type="date" id="game_date" name="game_date" value="{{game.game_date}}"><br><br>
+    <input type="submit" value="Update Game">
+  </form>
+{% endblock %}

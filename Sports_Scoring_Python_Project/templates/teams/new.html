@@ -1,31 +1,34 @@
 {% extends 'base.html' %}
+
 {% block content %}
-  <h1>Create a New Team</h1>
-  <form action="{{ url_for('teams.create') }}" method="POST">
-    <div>
-      <label for="team_name">Team Name:</label>
-      <input type="text" name="team_name" required>
-    </div>
-    <div>
-      <label for="league">League:</label>
-      <select name="league" required>
+
+<h2>New Team</h2>
+
+<form action="/teams" method="POST">
+    <label for="team_name">Team Name:</label>
+    <input type="text" name="team_name" required><br>
+
+    <label for="league">League:</label>
+    <select name="league" id="league">
         {% for league in leagues %}
-          <option value="{{ league.id }}">{{ league.league_name }}</option>
+            <option value="{{ league.id }}">{{ league.league_name }}</option>
         {% endfor %}
-      </select>
-    </div>
-    <div>
-        <label for="region">Region:</label>
-        <input type="text" name="region" required>
-      </div>      
-    <div>
-      <label for="wins">Wins:</label>
-      <input type="number" name="wins" required>
-    </div>
-    <div>
-      <label for="losses">Losses:</label>
-      <input type="number" name="losses" required>
-    </div>
-    <button type="submit">Create Team</button>
-  </form>
+    </select><br>
+
+    <label for="wins">Wins:</label>
+    <input type="number" name="wins" required><br>
+
+    <label for="losses">Losses:</label>
+    <input type="number" name="losses" required><br>
+
+    <label for="region">Region:</label>
+    <input type="text" name="region" required><br>
+
+    <label for="logo">Logo URL:</label>
+    <input type="text" name="logo" required><br> 
+
+    <input type="submit" value="Create Team">
+</form>
+
 {% endblock %}
+

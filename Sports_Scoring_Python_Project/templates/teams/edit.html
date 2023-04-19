@@ -1,16 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Edit Team</h1>
-  <form method="POST" action="{{ url_for('teams.update', id=team.id) }}">
 
-    <label for="name">Name:</label>
-    <input type="text" name="name" value="{{ team.team_name }}"><br>
+<h2>Edit Team</h2>
+
+<form action="/teams/{{ team.id }}" method="POST">
+    <label for="team_name">Team Name:</label>
+    <input type="text" name="name" value="{{ team.team_name }}" required><br>
+
+    <label for="league_name">League:</label>
+    <select name="league_name" id="league_name">
+        {% for league in leagues %}
+            <option value="{{ league.id }}" {% if league.id == team.league.id %}selected{% endif %}>{{ league.league_name }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label for="wins">Wins:</label>
+    <input type="number" name="wins" value="{{ team.wins }}" required><br>
+
+    <label for="losses">Losses:</label>
+    <input type="number" name="losses" value="{{ team.losses }}" required><br>
+
     <label for="region">Region:</label>
-    <input type="text" name="region" value="{{ team.region }}"><br>
+    <input type="text" name="region" value="{{ team.region }}" required>
     <label for="logo">Logo URL:</label>
-    <input type="text" name="logo" value="{{ team.logo }}"><br>
-    <input type="submit" value="Update">
-  </form>
+    <input type="text" name="logo" value="{{ team.logo }}" required><br> 
+    <input type="submit" value="Update team">
 {% endblock %}
-
